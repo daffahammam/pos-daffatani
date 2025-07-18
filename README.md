@@ -90,8 +90,8 @@ A modern and simple **Point of Sale (POS) system** for agricultural shops, built
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/daffa-tani-pos.git
-cd daffa-tani-pos
+git clone https://github.com/daffahammam/pos-daffatani.git
+cd pos-daffatani
 
 # Install dependencies
 composer install
