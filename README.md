@@ -10,8 +10,10 @@ A modern and simple **Point of Sale (POS) system** for agricultural shops, built
 - ✅ Role-based access control using Spatie Laravel Permission
 - ✅ Category & Product management
 - ✅ Real-time stock tracking
+- ✅ Sales Transaction with QR Code Scanner
 - ✅ Sales transaction system with receipt (PDF)
 - ✅ Sales history view with detailed filtering
+- ✅ QR Code Product Generate (PDF)
 - ✅ Monthly Sales Reports (PDF)
 - ✅ Monthly sales Products Report (PDF)
 - ✅ Interactive Dashboard with sales charts using Chart.js
@@ -20,7 +22,7 @@ A modern and simple **Point of Sale (POS) system** for agricultural shops, built
 
 ## 📦 Tech Stack
 
-| Layer        | Technology                         |
+| Layer        | Technology                          |
 |--------------|-------------------------------------|
 | Backend      | Laravel 12                          |
 | Frontend     | Blade + Tailwind CSS                |
@@ -28,7 +30,7 @@ A modern and simple **Point of Sale (POS) system** for agricultural shops, built
 | Permissions  | Spatie Laravel-Permission           |
 | PDF Export   | Barryvdh DomPDF                     |
 | Charting     | Chart.js                            |
-| Database     | MySQL                               |
+| Database     | PostgreSQL                          |
 
 ---
 
@@ -53,12 +55,14 @@ A modern and simple **Point of Sale (POS) system** for agricultural shops, built
     <img width="1919" height="969" alt="image" src="https://github.com/user-attachments/assets/d16267ee-9ef4-492b-b056-2098658cbf70" />
 
 > Create Sale (cashier view)
-    <img width="1919" height="967" alt="image" src="https://github.com/user-attachments/assets/3803dd1b-c6ea-46b5-ab49-012cf4c3d250" />
+    <img width="1919" height="901" alt="image" src="https://github.com/user-attachments/assets/4a1a73f1-8168-4f83-8257-bf36c58c1580" />
 
- 
 > Sale Details (cashier view)
     <img width="1919" height="969" alt="image" src="https://github.com/user-attachments/assets/4141a25a-638b-4c35-92ec-7e73fdf2f595" />
 
+> QR Code Product Generate
+    <img width="409" height="382" alt="image" src="https://github.com/user-attachments/assets/e6c8f403-68fd-4888-b5e5-cd39e440cf1b" />
+    
 > Receipt PDF
     <img width="1919" height="897" alt="image" src="https://github.com/user-attachments/assets/baa53ef0-a3fe-4c62-938a-69a509a54d65" />
 
@@ -83,6 +87,7 @@ A modern and simple **Point of Sale (POS) system** for agricultural shops, built
   - Monthly Sales Report
   - Monthly Sales Products
   - Printable Receipts
+  - QR Code Product Generate
 
 ---
 
