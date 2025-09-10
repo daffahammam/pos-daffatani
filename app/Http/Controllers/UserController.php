@@ -26,7 +26,7 @@ class UserController extends Controller
         $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
             'role'     => 'required|exists:roles,name',
         ]);
 
@@ -73,6 +73,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        // hapus dulu sales terkait
         $user->delete();
         return redirect()->route('users.index')->with('success', 'User berhasil dihapus.');
     }

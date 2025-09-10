@@ -6,6 +6,8 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ProductController extends Controller
 {
@@ -101,4 +103,34 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus');
     }
+
+
+
+    public function qrcodePdf($id)
+    {
+        $product = Product::with('category')->findOrFail($id);
+
+        // Format JSON agar scanner bisa kenali
+        $qrContent = json_encode([
+            'id'    => $product->id,
+            'name'  => $product->name,
+            'price' => $product->price,
+            'stock' => $product->stock,
+        ], JSON_UNESCAPED_UNICODE);
+
+        // Generate QR Code (SVG ke base64)
+        $qrSvg = QrCode::format('svg')
+            ->size(200)
+            ->generate($qrContent);
+
+        $qrCode = 'data:image/svg+xml;base64,' . base64_encode($qrSvg);
+
+        // Generate PDF kecil untuk label produk
+        $pdf = Pdf::loadView('products.qrcode-pdf', compact('product', 'qrCode'))
+            ->setPaper('a7', 'portrait');
+
+        return $pdf->download('qrcode-' . $product->name . '.pdf');
+    }
+
+
 }

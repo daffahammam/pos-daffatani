@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
-use App\Models\SaleDetail;
 use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\SaleDetail;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class SaleController extends Controller
 {
@@ -111,13 +112,46 @@ class SaleController extends Controller
 
 
 
-public function downloadPdf($id)
+    public function downloadPdf($id)
+    {
+        $sale = Sale::with('details.product', 'user')->findOrFail($id);
+
+        // Generate QR code dalam format SVG lalu ubah ke base64
+        $qrSvg = QrCode::format('svg')
+            ->size(100)
+            ->generate($sale->invoice);
+
+        $qrCode = 'data:image/svg+xml;base64,' . base64_encode($qrSvg);
+
+        $pdf = Pdf::loadView('sales.receipt-pdf', compact('sale', 'qrCode'))
+            ->setPaper([0, 0, 226.77, 600], 'portrait'); // ukuran 58mm x ~15cm (thermal)
+
+        return $pdf->download('struk-' . $sale->invoice . '.pdf');
+    }
+
+public function qrcodePdf($id)
 {
-    $sale = Sale::with('details.product', 'user')->findOrFail($id);
+    $product = Product::with('category')->findOrFail($id);
 
-    $pdf = Pdf::loadView('sales.receipt-pdf', compact('sale'))
-        ->setPaper([0, 0, 226.77, 600], 'portrait'); // ukuran 58mm x ~15cm (custom height)
+    // Isi QR dalam format JSON (agar bisa dibaca scanner)
+    $qrContent = json_encode([
+        'id'    => $product->id,
+        'name'  => $product->name,
+        'price' => $product->price,
+        'stock' => $product->stock,
+    ], JSON_UNESCAPED_UNICODE);
 
-    return $pdf->download('struk-' . $sale->invoice . '.pdf');
+    // Generate QR Code (SVG base64 supaya aman di DomPDF)
+    $qrSvg = QrCode::format('svg')
+        ->size(200)
+        ->generate($qrContent);
+
+    $qrCode = 'data:image/svg+xml;base64,' . base64_encode($qrSvg);
+
+    $pdf = Pdf::loadView('products.qrcode-pdf', compact('product', 'qrCode'))
+        ->setPaper('a7', 'portrait'); // ukuran kecil, cocok untuk label
+
+    return $pdf->download('qrcode-' . $product->name . '.pdf');
 }
+
 }

@@ -1,3 +1,6 @@
+@php
+    use SimpleSoftwareIO\QrCode\Facades\QrCode;
+@endphp
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -42,12 +45,14 @@
   </style>
 </head>
 <body>
+  {{-- Header toko --}}
   <div class="center bold">Daffa Tani</div>
   <div class="center small">Sribit, Delanggu, Klaten</div>
   <div class="center small">Telp: 0895-3239-01050</div>
 
   <div class="line"></div>
 
+  {{-- Info transaksi --}}
   <p class="small">
     Invoice: {{ $sale->invoice }}<br>
     Tanggal: {{ $sale->created_at->format('d/m/Y H:i') }}<br>
@@ -56,20 +61,26 @@
 
   <div class="line"></div>
 
+  {{-- Detail produk --}}
   <table>
     @foreach ($sale->details as $detail)
-    <tr>
-      <td colspan="2">{{ $detail->product->name }}</td>
-    </tr>
-    <tr>
-      <td class="small">{{ $detail->qty }} x Rp{{ number_format($detail->price, 0, ',', '.') }}</td>
-      <td class="right">Rp{{ number_format($detail->qty * $detail->price, 0, ',', '.') }}</td>
-    </tr>
+      <tr>
+        <td colspan="2">{{ $detail->product->name }}</td>
+      </tr>
+      <tr>
+        <td class="small">
+          {{ $detail->qty }} x Rp{{ number_format($detail->price, 0, ',', '.') }}
+        </td>
+        <td class="right">
+          Rp{{ number_format($detail->qty * $detail->price, 0, ',', '.') }}
+        </td>
+      </tr>
     @endforeach
   </table>
 
   <div class="line"></div>
 
+  {{-- Total --}}
   <table>
     <tr>
       <td class="bold">TOTAL</td>
@@ -79,7 +90,14 @@
 
   <div class="line"></div>
 
-  <div class="center small">
+  {{-- QR Code --}}
+  <div class="center" style="margin-top:10px;">
+    <img src="{{ $qrCode }}" width="100" alt="QR Code">
+</div>
+
+
+  {{-- Footer --}}
+  <div class="center small" style="margin-top:10px;">
     Terima kasih telah berbelanja <br>
     Petani Sukses Bersama Daffa Tani
   </div>

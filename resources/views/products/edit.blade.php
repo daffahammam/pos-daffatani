@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-  <div class="flex-1 overflow-y-auto h-screen bg-gray-50">
+  <div class="flex-1 overflow-y-auto h-screen bg-gray-50 pb-8">
     <div class="max-w-5xl mx-auto p-4 sm:p-6 lg:p-8 min-h-screen">
       <div class="bg-white shadow-lg rounded-xl overflow-hidden">
 

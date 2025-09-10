@@ -1,8 +1,13 @@
+@php
+    use SimpleSoftwareIO\QrCode\Facades\QrCode;
+@endphp
 @extends('layouts.dashboard')
 
 @section('content')
 <div class="max-w-5xl mx-auto p-6">
   <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+
+    {{-- Header --}}
     <div class="px-6 py-4 border-b flex justify-between items-center">
       <div>
         <h2 class="text-xl font-bold text-gray-800">🧾 Detail Transaksi</h2>
@@ -10,20 +15,25 @@
         <p class="text-sm text-gray-500">Tanggal: {{ $sale->created_at->format('d M Y, H:i') }}</p>
         <p class="text-sm text-gray-500">Kasir: {{ $sale->user->name ?? 'N/A' }}</p>
       </div>
-      <div class="flex justify-end gap-3 mt-4">
-  <a href="{{ route('sales.pdf', $sale->id) }}"
-     class="inline-flex items-center px-2 py-1 bg-blue-600 text-white text-xs font-semibold rounded hover:bg-blue-700 transition"
-     target="_blank">
-    Cetak
-  </a>
-  <a href="{{ route('sales.index') }}"
-     class="inline-flex items-center px-2 py-1 text-xs font-semibold text-green-600 hover:underline">
-    ← Kembali
-  </a>
-</div>
-
+      <div class="visible-print mt-12">
+        {!! QrCode::size(100)->generate($sale->invoice) !!}
+    </div>
     </div>
 
+    {{-- Tombol Aksi --}}
+    <div class="flex justify-end gap-3 px-6 py-4 border-b">
+      <a href="{{ route('sales.pdf', $sale->id) }}"
+          class="inline-flex items-center px-2 py-1 bg-blue-600 text-white text-xs font-semibold rounded hover:bg-blue-700 transition"
+          target="_blank">
+          Cetak
+      </a>
+      <a href="{{ route('sales.index') }}"
+          class="inline-flex items-center px-2 py-1 text-xs font-semibold text-green-600 hover:underline">
+          ← Kembali
+      </a>
+    </div>
+
+    {{-- Tabel Detail --}}
     <div class="p-6">
       <table class="w-full text-sm text-left border">
         <thead class="bg-gray-100">
@@ -54,6 +64,7 @@
         </tfoot>
       </table>
     </div>
+
   </div>
 </div>
 @endsection

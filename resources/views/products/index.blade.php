@@ -72,6 +72,11 @@
                    class="inline-flex items-center px-2 py-1 bg-blue-600 text-white text-xs font-semibold rounded hover:bg-blue-700 transition">
                     Edit
                 </a>
+                <a href="{{ route('products.qrcode.pdf', $product->id) }}"
+                    class="inline-flex items-center px-2 py-1 bg-yellow-600 text-white text-xs font-semibold rounded hover:bg-yellow-700 transition"
+                    target="_blank">
+                    QR PDF
+                 </a>
                 <form action="{{ route('products.destroy', $product->id) }}" method="POST"
                       class="inline-block" onsubmit="return confirm('Hapus produk ini?')">
                   @csrf

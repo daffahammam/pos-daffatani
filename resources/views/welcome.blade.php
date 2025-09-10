@@ -1,3 +1,6 @@
+@php
+    use SimpleSoftwareIO\QrCode\Facades\QrCode;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +13,7 @@
 <body class="antialiased bg-gray-100 text-gray-800">
 
     <div class="min-h-screen flex flex-col items-center justify-center px-6">
-        <div class="text-center space-y-6">
+        <div class="text-center space-y-2">
             <img src="{{ asset('images/daffatani.png') }}" alt="daffatani" class="w-64 mx-auto" />
 
             <p class="text-lg text-gray-600 max-w-xl mx-auto">
@@ -28,8 +31,10 @@
                 </a>
             </div>
         </div>
-
-        <footer class="mt-12 text-xs text-gray-400 text-center">
+        {{-- <div class="visible-print mt-8">
+            {!! QrCode::size(100)->generate(url('/login')) !!}
+        </div> --}}
+        <footer class="mt-8 text-xs text-gray-400 text-center">
             &copy; {{ date('Y') }} Daffa Tani POS. All rights reserved.
         </footer>
     </div>

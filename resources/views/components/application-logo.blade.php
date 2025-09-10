@@ -4,4 +4,4 @@
 
 
 <!-- resources/views/components/application-logo.blade.php -->
-<img src="{{ asset('images/daffatani.png') }}" alt="daffatani" class="w-64 mx-auto" />
+<img src="{{ asset('images/daffatani.png') }}" alt="daffatani" class="w-12 mx-auto" />

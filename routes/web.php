@@ -46,6 +46,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role:admin|kasir')->group(function () {
         Route::resource('sales', SaleController::class);
         Route::get('/sales/{id}/pdf', [SaleController::class, 'downloadPdf'])->name('sales.pdf');
+        Route::get('/products/{id}/qrcode-pdf', [ProductController::class, 'qrcodePdf'])->name('products.qrcode.pdf');
+
     });
 
 });
